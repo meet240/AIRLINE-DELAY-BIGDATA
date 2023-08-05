@@ -1,0 +1,27 @@
+#exporting data to RDS
+sqoop export --connect jdbc:mysql://incdatabase.cx1ohxrtyfvh.us-east-1.rds.amazonaws.com/project \
+--username admin -P --table flight --export-dir s3://suyashpro/airline.csv --input-fields-terminated-by ","
+
+#importing data to RDS
+sqoop import --connect jdbc:mysql://incdatabase.cx1ohxrtyfvh.us-east-1.rds.amazonaws.com/project \
+--username admin -P --table flight --target-dir /mydata -m 1
+
+#incremental load to RDS
+sqoop export --connect jdbc:mysql://incdatabase.cx1ohxrtyfvh.us-east-1.rds.amazonaws.com/project \
+--username admin -P --table flight --export-dir s3://suyashpro/airline_inc.csv --input-fields-terminated-by ","
+
+#import incremental data
+sqoop import --connect jdbc:mysql://incdatabase.cx1ohxrtyfvh.us-east-1.rds.amazonaws.com/project \
+--username admin -P --table flight --incremental append --check-column id \
+--last-value 309210 --target-dir /mydata2 -m 1
+
+#working with hive 
+sqoop import --connect jdbc:mysql://incdatabase.cx1ohxrtyfvh.us-east-1.rds.amazonaws.com/project \
+--username admin -P --table flight --target-dir /user/hive/warehouse/airline --fields-terminated-by "," --hive-import \
+--create-hive-table --hive-table airline
+
+#working with hive incremental load
+sqoop import --connect jdbc:mysql://incdatabase.cx1ohxrtyfvh.us-east-1.rds.amazonaws.com/project \
+--username admin -P --table flight --incremental append --check-column id \
+--last-value 309210 --target-dir /user/hive/warehouse/airline --fields-terminated-by "," --hive-import \
+--create-hive-table --hive-table airline
