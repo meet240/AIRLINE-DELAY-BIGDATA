@@ -1,0 +1,125 @@
+aws s3 cp s3://group24raw/archive.zip .
+aws s3 cp --recursive /home/hadoop/airline\ delay\ analysis s3://group24raw/rawdata/
+hdfs dfs -put /home/hadoop/airline\ delay\ analysis/* data/
+
+
+
+ 
+
+
+>>> from pyspark.sql.functions import isnan,when,count,col
+>>> df_pro.select([count(when(isnan(c),c)).alias(c) for c in df_pro.columns]).show()
+
+
+
+hive>  create external table year09(fl_date string,op_carrier string,op_carrier_fl_num int,Origin string, Dest string,crs_dep_time int,dep_time float,dep_delay float,taxi_out float,wheels_off float,wheels_on float,taxi_in float,crs_arr_time int,arr_time float,arr_delay float,cancelled string,cancellation_code string,diverted string,crs_elapsed_time float,actual_elapsed_time float,air_time float,distance float,carrier_delay float,weather_delay float,nas_delay float,security_delay float,late_aircraft_delay float,unamed string)
+    > row format delimited fields terminated by ","
+    > location "s3://group24raw/rawdata/";
+
+
+
+>>> from pyspark.sql.functions import isnan,when,count,col
+>>> df_pro.select([count(when(isnan(c)|col(c).isNull(),c)).alias(c) for c in df_pro.columns]).show()
+
+
+
+ df_year.drop("Unnamed: 27")
+
+
+
+
+
+
+
+>>> df_year=df_year.drop("Unnamed: 27")
+>>> df_year.printSchema()
+
+
+df_2019= df_2019.withColumnRenamed("OP_UNIQUE_CARRIER","OP_CARRIER")
+
+
+
+from pyspark.sql.functions import concat, lit, col
+df_pro=df_pro.select("*", concat(col("FL_DATE"),lit(" "),col("CRS_DEP_TIME")).alias("SCH_DEP"))
+df_table.show()
+from pyspark.sql.functions import isnan, when, count, col
+df_pro.select([count(when(isnan(c) | col(c).isNull(), c)).alias(c) for c in df_pro.columns]).show()
+from pyspark.sql.functions import isnan, when, count, col
+df_table.select([count(when(isnan('CRS_DEP_TIME'),True))]).show()
+
+
+df_pro=df_pro.where(col("CRS_DEP_TIME").isNotNull())
+
+
+
+
+>>> df_table.select("SCH_DEP").distinct().count()
+4051457
+>>> df_table.select("SCH_DEP").count()
+63840602
+
+
+s3://group24raw/enzone24/data/  --path
+https://medium.com/@shobhita.agarwal/load-data-from-s3-to-rds-across-aws-accounts-e74c41c4a231
+
+
+
+df_pro=df_pro.drop("Unnamed: 27")
+df_pro=df_pro.drop("LATE_AIRCRAFT_DELAY")
+df_pro=df_pro.drop("SECURITY_DELAY")
+df_pro=df_pro.drop("NAS_DELAY")
+df_pro=df_pro.drop("WEATHER_DELAY")
+df_pro=df_pro.drop("CARRIER_DELAY")
+df_pro=df_pro.drop("WHEELS_ON")
+df_pro=df_pro.drop("WHEELS_OFF")
+df_pro=df_pro.drop("TAXI_IN")
+df_pro=df_pro.drop("TAXI_OUT")
+
+
+df_pro.createOrReplaceTempView("fldata") 
+
+>>> sqlContext = SQLContext(sc)
+>>> sqlContext.sql("create table airlines as select * from fldata")
+
+>>> from pyspark import SparkContext
+>>> df_pro.createOrReplaceTempView("fldata")
+
+
+> df_pro=df_pro.withColumn("DEP_DELAY",df_pro.DEP_DELAY.cast('int'))
+>>> df_pro=df_pro.withColumn("ARR_DELAY",df_pro.ARR_DELAY.cast('int'))
+>>> df_pro=df_pro.withColumn("CRS_ELAPSED_TIME",df_pro.CRS_ELAPSED_TIME.cast('int'))
+>>> df_pro=df_pro.withColumn("ACTUAL_ELAPSED_TIME",df_pro.ACTUAL_ELAPSED_TIME.cast('int'))
+>>> df_pro=df_pro.withColumn("DISTANCE",df_pro.DISTANCE.cast('float'))
+>>> df_pro=df_pro.withColumn("AIR_TIME",df_pro.AIR_TIME.cast('int'))
+>>> df_pro=df_pro.withColumn("FL_DATE",df_pro.FL_DATE.cast('date'))  
+
+
+#for choosing 30 % data of total in pyspark (Sample data )
+df_air=df_pro.sample(False,0.3)
+
+
+
+
+
+for changing datatype ;--->>
+
+df_pro=df_pro.withColumn("DEP_DELAY",df_pro.DEP_DELAY.cast('int'))
+>>> df_pro=df_pro.withColumn("ARR_DELAY",df_pro.ARR_DELAY.cast('int'))
+>>> df_pro=df_pro.withColumn("CRS_ELAPSED_TIME",df_pro.CRS_ELAPSED_TIME.cast('int'))
+>>> df_pro=df_pro.withColumn("ACTUAL_ELAPSED_TIME",df_pro.ACTUAL_ELAPSED_TIME.cast('int'))
+>>> df_pro=df_pro.withColumn("DISTANCE",df_pro.DISTANCE.cast('float'))
+>>> df_pro=df_pro.withColumn("AIR_TIME",df_pro.AIR_TIME.cast('int'))
+>>> df_pro=df_pro.withColumn("FL_DATE",df_pro.FL_DATE.cast('date'))
+
+
+for 30% data load
+df_air=df_pro.sample(False,0.3)
+
+
+
+
+
+
+
+
+
