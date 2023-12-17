@@ -4,6 +4,111 @@ Files Overview
 1. airline_ml.ipynb
 This Jupyter Notebook contains the machine learning aspect of the project. The key steps include:
 
+FL_DATE: Flight date (object)
+OP_CARRIER: Operating carrier (object)
+OP_CARRIER_FL_NUM: Operating carrier flight number (int)
+ORIGIN: Origin airport (object)
+DEST: Destination airport (object)
+DEP_TIME: Departure time (object)
+DEP_DELAY: Departure delay (int)
+CRS_ARR_TIME: Scheduled arrival time (object)
+ARR_TIME: Actual arrival time (object)
+ARR_DELAY: Arrival delay (int)
+CANCELLED: Flight cancellation status (float)
+DIVERTED: Flight diversion status (float)
+CRS_ELAPSED_TIME: Scheduled elapsed time (int)
+ACTUAL_ELAPSED_TIME: Actual elapsed time (int)
+AIR_TIME: Air time (int)
+DISTANCE: Flight distance (float)
+CRS_DEP_TIME: Scheduled departure time (object)
+Data Preprocessing
+Timestamp Split:
+
+The FL_DATE and CRS_DEP_TIME columns are split into year, month, day, hour, minute, and second for further analysis.
+Feature Selection:
+
+Unnecessary columns such as FL_DATE, CRS_DEP_TIME, DEP_TIME, CRS_ARR_TIME, ARR_TIME, ARR_DELAY, CANCELLED, DIVERTED, ACTUAL_ELAPSED_TIME, AIR_TIME are dropped.
+Label Assignment:
+
+The column DEP_STATUS is created based on the departure delay. Flights are labeled as 'OnTime' if the delay is less than 15 minutes and 'Delay' otherwise.
+Origin and Carrier Information:
+
+The model is initially trained for flights originating from ALT with OP_CARRIER as WN. Relevant columns are dropped.
+Dependent and Independent Features:
+
+Dependent features (DEP_DELAY and DEP_STATUS) are assigned to y, and independent features are assigned to X.
+Label Encoding:
+
+Label encoding is applied to categorical columns using LabelEncoder and OneHotEncoder for further analysis.
+Machine Learning Model
+Decision Tree and Random Forest Classification
+Initial Model:
+
+Decision Tree and Random Forest classifiers are trained on the dataset. Initial accuracy scores are reported.
+Round 2 Model:
+
+Introduction
+This project focuses on analyzing airline delay data using machine learning techniques. The dataset contains various features related to flight details, departure, and arrival times.
+
+Dataset Overview
+The dataset includes the following columns:
+
+FL_DATE: Flight date (object)
+OP_CARRIER: Operating carrier (object)
+OP_CARRIER_FL_NUM: Operating carrier flight number (int)
+ORIGIN: Origin airport (object)
+DEST: Destination airport (object)
+DEP_TIME: Departure time (object)
+DEP_DELAY: Departure delay (int)
+CRS_ARR_TIME: Scheduled arrival time (object)
+ARR_TIME: Actual arrival time (object)
+ARR_DELAY: Arrival delay (int)
+CANCELLED: Flight cancellation status (float)
+DIVERTED: Flight diversion status (float)
+CRS_ELAPSED_TIME: Scheduled elapsed time (int)
+ACTUAL_ELAPSED_TIME: Actual elapsed time (int)
+AIR_TIME: Air time (int)
+DISTANCE: Flight distance (float)
+CRS_DEP_TIME: Scheduled departure time (object)
+Data Preprocessing
+Timestamp Split:
+
+The FL_DATE and CRS_DEP_TIME columns are split into year, month, day, hour, minute, and second for further analysis.
+Feature Selection:
+
+Unnecessary columns such as FL_DATE, CRS_DEP_TIME, DEP_TIME, CRS_ARR_TIME, ARR_TIME, ARR_DELAY, CANCELLED, DIVERTED, ACTUAL_ELAPSED_TIME, AIR_TIME are dropped.
+Label Assignment:
+
+The column DEP_STATUS is created based on the departure delay. Flights are labeled as 'OnTime' if the delay is less than 15 minutes and 'Delay' otherwise.
+Origin and Carrier Information:
+
+The model is initially trained for flights originating from ALT with OP_CARRIER as WN. Relevant columns are dropped.
+Dependent and Independent Features:
+
+Dependent features (DEP_DELAY and DEP_STATUS) are assigned to y, and independent features are assigned to X.
+Label Encoding:
+
+Label encoding is applied to categorical columns using LabelEncoder and OneHotEncoder for further analysis.
+Machine Learning Model
+Decision Tree and Random Forest Classification
+Initial Model:
+
+Decision Tree and Random Forest classifiers are trained on the dataset. Initial accuracy scores are reported.
+Round 2 Model:
+
+A refined dataset (X2) is created with fewer features, and Decision Tree and Random Forest classifiers are trained again. Improved accuracy scores are achieved.
+Hyperparameter Tuning:
+
+Grid search is employed for hyperparameter tuning, and the best parameters are identified.
+Final Model:
+
+The final Random Forest model is trained with tuned hyperparameters.
+Model Evaluation
+Confusion matrices and classification reports are generated to evaluate the performance of the models.
+Model Persistence
+The final Random Forest model is saved using the pickle module for future use.
+Instructions for Use
+
 Data Loading and Exploration: Loading the dataset and exploring the structure and features.
 Data Transformation: Handling missing values, splitting timestamps, and feature engineering.
 Feature Selection: Selecting relevant features and assigning labels based on departure delays.
